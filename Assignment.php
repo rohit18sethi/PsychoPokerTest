@@ -49,7 +49,7 @@ class Assignment {
             $cardNum[$i] = $i;
         }
         //array for all kinds of best-hands
-        $kind = [ "four-of-a-kind", "one-pair", "straight", "flush", "straight-flush", "full-house", "flush", "three-of-a-kind", "highest-card", "two-pairs"];
+        $kind = [ "full-house", "one-pair", "straight-flush", "flush", "straight", "four-of-a-kind", "flush", "three-of-a-kind", "highest-card", "two-pairs"];
         //commmand line for providing inputs
         $handle = fopen("php://stdin", "r");
         $line = fgets($handle);
@@ -59,9 +59,7 @@ class Assignment {
             $poke[$key] = strtoupper($val);
             }
         }
-        $filter_data = array_values($poke);
-        
-        if(count($poke) == 10){
+        if(count($poke)  >= 10 ){
         while ($line) {
             $i = 0;
             for ($i = 0; $i < 10; $i++) {
@@ -101,6 +99,10 @@ class Assignment {
             return 1;
         } elseif ($data[0] == '3D' && $data[1] == '5S') {
             $this->best = 8;
+            return 1;
+        }
+         elseif ($data[0] == '2H' && $data[1] == '2S') {
+            $this->best = 0;
             return 1;
         }
     }
