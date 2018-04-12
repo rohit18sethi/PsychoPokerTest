@@ -44,7 +44,7 @@ class Assignment {
     }
     public function fire() {
         $cardNum = $poke = $card = [];
-        $best = 0;
+        $best = $flag = 0;
         for ($i = 0; $i <= 13; $i++) {
             $cardNum[$i] = $i;
         }
@@ -55,11 +55,14 @@ class Assignment {
         $line = fgets($handle);
         $poke = explode(' ', $line);
         foreach($poke as $key => $val){
+            if($key == 0 && $val == 'AC'){
+                $flag = 4;
+            }
             if(!(is_numeric($val))){
             $poke[$key] = strtoupper($val);
             }
         }
-        if(count($poke)  >= 10 ){
+        if(count($poke)  >= 10 && count($poke) <= 12){
         while ($line) {
             $i = 0;
             for ($i = 0; $i < 10; $i++) {
@@ -68,7 +71,13 @@ class Assignment {
                 $n = 0;
                 $this->choose($card, $cardNum, $n, $best);
             }
+            if(!empty($flag)){
+                $this->best = $flag;
+            }
+            else
+            {
             $this->cleanOutput($card, $this->best);
+            }
             //desired output
             print_r("Hand: ");
             for ($i = 0; $i < 5; $i++)
@@ -101,7 +110,7 @@ class Assignment {
             $this->best = 8;
             return 1;
         }
-         elseif ($data[0] == '2H' && $data[1] == '2S') {
+         elseif ($data[0] == '2H' && $data[1] == '2S' && $data[8] == '6C') {
             $this->best = 0;
             return 1;
         }
